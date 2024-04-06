@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		body,
+		html {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-family: 'Cormorant Garamond', sans-serif;
+			font-size: 14px;
+			font-weight: 400;
+			color: gray;
+		}
+
+		#test {
+			display: none;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.major-card {
+			max-width: 1000px;
+			margin-left: auto;
+			margin-right: auto;
+			background-color: white;
+			border-radius: 10px;
+		}
+
+		.card-body-1 {
+			max-width: 500px;
+			text-align: left;
+			border-right: 4px rgba(13, 13, 13, 0.3) solid;
+
+		}
+
+		.card-body-2 {
+			max-width: 500px;
+			text-align: left;
+			padding-left: 20px;
+		}
+
+		.img-inside {
+			width: 100%;
+			height: auto;
+			cursor: zoom-in;
+			transition: transform 0.3s ease;
+
+		}
+
+		.card-body {
+			display: grid;
+			grid-template-columns: auto auto;
+
+		}
+
+		.card-body {
+			padding: 0 20px 20px;
+		}
+
+		.card-title {
+			margin-left: 20px;
+			color: orange;
+			text-transform: uppercase;
+			font-size: 15px;
+		}
+
+		.highlight {
+			color: black;
+			font-weight: 900;
+		}
+
+		.text-right {
+			font-size: 14px;
+		}
+
+		.card-body-2 img {
+			border-radius: 50%;
+			width: 70%;
+
+		}
+
+		.img-zoom {
+			transform: scale(1.2);
+		}
+
+		figure {
+			margin: 0;
+		}
+
+		figcaption {
+			margin-left: 12px;
+			color: black;
+			font-weight: 700;
+
+		}
+
+		.figcaption-text-small {
+			margin-left: 23px;
+			font-weight: 700;
+		}
+
+		.figure {
+			display: flex;
+			position: relative;
+		}
+
+		.figure figure {
+			position: relative;
+		}
+
+		.figure figure::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			aspect-ratio: 1/1;
+			background-size: cover;
+			background-position: center;
+			background-size: contain;
+			background-position: center;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+			border-radius: 50%;
+
+		}
+
+		.figure figure:hover::before {
+			opacity: 1;
+		}
+
+		.figure figure:nth-child(1)::before,
+		.figure figure:nth-child(2)::before,
+		.figure figure:nth-child(3)::before,
+		.figure figure:nth-child(4)::before {
+			width: 72%;
+			background-image: url('./img/pluah_c.jpg');
+		}
+
+		.arrow {
+			text-align: center;
+		}
+
+		#modal-image,
+		#modal-image-1,
+		#modal-image-2,
+		#modal-image-3 {
+			max-width: 100px;
+		}
+
+		.highlight-card {
+			border: 4px solid black;
+		}
+
+		#modal {
+			display: none;
+			position: fixed;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 9999;
+		}
+
+		#modal-content {
+			background-color: white;
+			padding: 17px;
+
+		}
+
+		#close-modal {
+
+			color: black;
+			font-size: 18px;
+			border: none;
+			background-color: transparent;
+			float: right;
+			margin-left: 7px;
+
+		}
+
+		#prev-image,
+		#next-image {
+			color: black;
+			font-size: 18px;
+			border: none;
+			background-color: transparent;
+		}
+
+		@media only screen and (max-width: 850px) {
+			#modal-content {
+				padding: 10px;
+			}
+
+			.card-body {
+				display: block;
+			}
+
+			.card-body-1 {
+				border-right: none;
+				border-bottom: 4px rgba(13, 13, 13, 0.3) solid;
+			}
+
+			#modal {
+				position: absolute;
+			}
+		}
+
+		@media only screen and (max-width: 805px) {
+			#modal-content {
+				padding: 21px;
+			}
+		}
+
+		@media only screen and (max-width: 580px) {
+			#modal-content {
+				padding: 16px;
+			}
+		}
+
+		@media only screen and (max-width: 568px) {
+			#modal-content {
+				padding: 0 60px;
+			}
+
+			#modal-image,
+			#modal-image-1,
+			#modal-image-2,
+			#modal-image-3 {
+				max-width: 75px;
+			}
+
+			#close-modal {
+				margin-left: 13px;
+			}
+		}
+
+		@media only screen and (max-width: 512px) {
+
+
+			#modal-image,
+			#modal-image-1,
+			#modal-image-2,
+			#modal-image-3 {
+				max-width: 75px;
+			}
+
+			#modal-content {
+				padding: 0 40px;
+			}
+
+
+		}
+
+		@media only screen and (max-width: 480px) {
+			#modal-content {
+				padding: 0 30px;
+			}
+		}
+
+		@media only screen and (max-width: 453px) {
+			#modal-content {
+				padding: 0 20px;
+			}
+
+			#modal-image,
+			#modal-image-1,
+			#modal-image-2,
+			#modal-image-3 {
+				max-width: 70px;
+			}
+		}
+
+		@media only screen and (max-width: 410px) {
+
+			#modal-image,
+			#modal-image-1,
+			#modal-image-2,
+			#modal-image-3 {
+				max-width: 60px;
+			}
+		}
+
+		@media only screen and (max-width: 380px) {
+
+			#modal-image,
+			#modal-image-1,
+			#modal-image-2,
+			#modal-image-3 {
+				max-width: 55px;
+			}
+		}
+	</style>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+		rel="stylesheet">
+</head>
+
+
+<body>
+	<div class="major-card">
+		<h2 class="card-title">Склад та матеріали</h2>
+		<div class="card-body">
+			<div class="card-body-1">
+				<p class="text-left">Дакімакура подушка для обіймання має 2 чохли: внутрішній з наповнювачем,
+					та зовнішній задрукований чохол з прихованою блискавкоюб який можна зняти для прання
+					або заміни</p>
+				<p class="text-left"><span class="highlight">Внутрішній чохол</span> зроблено з міцного гіпоалергенного
+					нетканого
+					матеріалу підвищеної
+					міцності. Додатково до нього підшитий шар мʼякого синтепона, який допомагає подушці утримувати
+					форму, згладжує поверхню у разі нерівномірного розподілення наповнювача.
+				</p>
+				<img class="img-inside" src="./img/inside_dakim.jpg" alt="Дакімакура подушка">
+			</div>
+
+			<div class="card-body-2">
+				<h2 class="text-right"><span class="highlight">Зовнішній чохол</span> можна виготовити на вибір із
+					тканин
+					габардин та
+					атлас,
+					а
+					також
+					під
+					замовлення з тканин флок або плюш.</h2>
+				<div id="modal" style="display: none;">
+
+					<div id="modal-content">
+
+						<img class="modal-circle" id="modal-image" src="./img/pluah_w.jpg" alt="Габардин">
+						<img class="modal-circle" id="modal-image-1" src="./img/pluah_w.jpg" alt="Атлас">
+						<img class="modal-circle" id="modal-image-2" src="./img/pluah_w.jpg" alt="Флок">
+						<img class="modal-circle" id="modal-image-3" src="./img/pluah_w.jpg" alt="Плюш">
+						<button id="close-modal">&#10006;</button>
+						<div class="arrow">
+							<button id="prev-image">&#10094;</button>
+							<button id="next-image">&#10095;</button>
+						</div>
+
+					</div>
+				</div>
+				<div class="figure">
+					<figure>
+						<img src="./img/pluah_w.jpg" alt="Габардин">
+						<figcaption>Габардин</figcaption>
+					</figure>
+					<figure>
+						<img src="./img/pluah_w.jpg" alt="Атлас">
+						<figcaption class="figcaption-text-small">Атлас</figcaption>
+					</figure>
+					<figure>
+						<img src="./img/pluah_w.jpg" alt="Флок">
+						<figcaption class="figcaption-text-small">Флок</figcaption>
+					</figure>
+					<figure>
+						<img src="./img/pluah_w.jpg" alt="Плюш">
+						<figcaption class="figcaption-text-small">Плюш</figcaption>
+					</figure>
+				</div>
+				<div class="description">
+					<p class="text-right"><span class="highlight">Габардин</span> - розповсюджений для пошиву одягу,
+						штор, тощо. Має приємний матовий
+						колір. Щільність
+						150.</p>
+					<p class="text-right"><span class="highlight">Атлас</span> - дуже мʼякенький та приємний тактильно,
+						має двобічний ворс 4-5 мм.</p>
+					<p class="text-right"><span class="highlight">Флок</span> - бархатиста приємна на дотик меблева
+						тканина, проста і невибаглива у догляді, гіпоалергенна, якісна та довговічна</p>
+					<p class="text-right"><span class="highlight">Плюш</span> - дуже мʼякенький та приємний тактильно,
+						має двобічний ворс 4-5 мм. </p>
+					<p class="text-right"><span class="highlight">Наповнювач подушки</span> - холлофайбер першого
+						гатунку.</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const images = document.querySelectorAll('.img-inside');
+		const figures = document.querySelectorAll('.figure figure');
+		const modal = document.getElementById('modal');
+		const modalContent = document.getElementById('modal-content');
+		const modalImage = document.getElementById('modal-image');
+		const prevButton = document.getElementById('prev-image');
+		const nextButton = document.getElementById('next-image');
+		const closeButton = document.getElementById('close-modal');
+		let currentImageIndex = 0;
+
+		images.forEach(img => {
+			img.addEventListener('click', () => {
+				img.classList.toggle('img-zoom');
+			});
+		});
+
+		figures.forEach((figure, index) => {
+			figure.addEventListener('click', () => {
+				currentImageIndex = index;
+				showModal();
+				showImage(index);
+			});
+		});
+
+		function showModal() {
+			modal.style.display = 'block';
+		}
+
+		function hideModal() {
+			modal.style.display = 'none';
+		}
+
+		function showImage(index) {
+			const images = document.querySelectorAll('.figure img');
+			modalImage.src = images[index].src;
+		}
+
+		const modalImages = document.querySelectorAll('.modal-circle');
+
+		function prevImage() {
+
+			modalImages[currentImageIndex].classList.remove('highlight-card');
+
+			currentImageIndex = (currentImageIndex - 1 + modalImages.length) % modalImages.length;
+
+			showImage(currentImageIndex);
+
+			modalImages[currentImageIndex].classList.add('highlight-card');
+		}
+
+		function nextImage() {
+
+			modalImages[currentImageIndex].classList.remove('highlight-card');
+
+			currentImageIndex = (currentImageIndex + 1) % modalImages.length;
+
+			showImage(currentImageIndex);
+
+			modalImages[currentImageIndex].classList.add('highlight-card');
+		}
+		prevButton.addEventListener('click', prevImage);
+		nextButton.addEventListener('click', nextImage);
+		closeButton.addEventListener('click', hideModal);
+	</script>
+</body>
+
+
+</html>
